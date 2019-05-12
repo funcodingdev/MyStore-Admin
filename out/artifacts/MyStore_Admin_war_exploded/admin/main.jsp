@@ -39,7 +39,7 @@
 			<div class="am-u-sm-12 am-u-md-3"></div>
 			<div class="am-u-sm-12 am-u-md-3">
 				<div class="am-input-group am-input-group-sm">
-					<input type="text" class="am-form-field" id="input_search">
+					<input type="text" class="am-form-field" id="input_search" value="${vagueField}">
 					<span class="am-input-group-btn">
 						<button class="am-btn am-btn-default" type="button"
 							id="input_search_btn">搜索</button>
@@ -61,10 +61,10 @@
 		</ul>
 
 
-		<c:forEach items="${allGoods }" var="goods" varStatus="status">
+		<c:forEach items="${pageBean.goodsList}" var="goods" varStatus="status">
 		
 		<ul class="list_goods_ul">
-			<li>${status.index + 1}</li>
+			<li>${(pageBean.currentPage-1)*pageBean.pageCount+status.index + 1}</li>
 			<li><img src="${ctx }/admin/images/pimages/${goods.image}" ></li>
 			<li>${goods.name }</li>
 			<li>${goods.price }</li>
@@ -74,7 +74,7 @@
 		</c:forEach>
 		
 		<!--分页-->
-		<div id="page" class="page_div">aaa</div>
+		<div id="page" class="page_div"></div>
 	</div>
 
 	<script src="${ctx }/admin/js/jquery.min.js"></script>
@@ -82,17 +82,27 @@
 	<script>
     //分页
     $("#page").paging({
-        pageNo:5,
-        totalPage: 10,
-        totalSize: 300,
+        pageNo:${pageBean.currentPage},
+        totalPage: ${pageBean.totalPage},
+        totalSize: ${pageBean.totalCount},
         callback: function(num) {
-            alert(num);
+			<c:if test="${pageBean.isGeneral == 0}">
+				<%--$(window).attr('location',"${pageContext.request.contextPath }/GoodsServlet?action=getPageData&currentPage="+num);--%>
+			</c:if>
+			<c:if test="${pageBean.isGeneral == 1}">
+				$(window).attr('location',"${pageContext.request.contextPath }/GoodsServlet?action=getPageData&currentPage="+num);
+			</c:if>
         }
     });
 
     $("#add").click(function () {
         $(window).attr('location',"${ctx}/GoodsServlet?action=addGoodsUI");
     });
+
+    $('#input_search_btn').click(function () {
+    	var searchValue = document.getElementById('input_search');
+		$(window).attr('location',"${ctx}/GoodsServlet?action=getPageBeanByLike&vagueField="+searchValue.value);
+	})
 
 </script>
 

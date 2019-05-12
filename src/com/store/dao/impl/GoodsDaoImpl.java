@@ -2,10 +2,12 @@ package com.store.dao.impl;
 
 import com.store.dao.IGoodsDao;
 import com.store.domain.Goods;
+import com.store.domain.PageBean;
 import com.store.util.JDBCUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -49,4 +51,33 @@ public class GoodsDaoImpl implements IGoodsDao {
         Goods goods = qr.query(sql, new BeanHandler<Goods>(Goods.class), id);
         return goods;
     }
+
+    @Override
+    public Long getGoodsCount() throws SQLException {
+        String sql = "select count(*) from goods";
+        QueryRunner qr = new QueryRunner(JDBCUtil.getDs());
+        return (Long) qr.query(sql,new ScalarHandler());
+    }
+
+    @Override
+    public List<Goods> getPageData(Integer currentPageIndex, Integer pageCount) throws SQLException {
+        String sql = "select * from goods limit ?,?";
+        QueryRunner qr = new QueryRunner(JDBCUtil.getDs());
+        return qr.query(sql,new BeanListHandler<Goods>(Goods.class),currentPageIndex,pageCount);
+    }
+
+    @Override
+    public Long getGoodsCountByLike(String vagueField) throws SQLException {
+        String sql = "select count(*) from goods where name like ?";
+        QueryRunner qr = new QueryRunner(JDBCUtil.getDs());
+        return (Long) qr.query(sql,new ScalarHandler(),"%"+vagueField+"%");
+    }
+
+    @Override
+    public List<Goods> getGoodsByLike(String vagueField) throws SQLException {
+        String sql = "select * from goods where name like ?";
+        QueryRunner qr = new QueryRunner(JDBCUtil.getDs());
+        return qr.query(sql,new BeanListHandler<Goods>(Goods.class),"%"+vagueField+"%");
+    }
+
 }

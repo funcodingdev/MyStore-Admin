@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 public class GoodsDaoImplTest {
 
     @Test
@@ -46,6 +44,36 @@ public class GoodsDaoImplTest {
         Goods goods = new Goods(1, "'梵希蔓短袖衬衣女2018新款夏季气质韩版通勤'", 259.00, "goods_001.png");
         try {
             DaoFactory.getGoodsDao().updateGoods(goods);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getGoodsCount(){
+        try {
+            Long goodsCount = DaoFactory.getGoodsDao().getGoodsCount();
+            System.out.println(goodsCount.intValue());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getGoodsCountByLike() {
+        try {
+            Long go = DaoFactory.getGoodsDao().getGoodsCountByLike("梵");
+            System.out.println(go.intValue());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getPageDataByLike() {
+        try {
+            List<Goods> list = DaoFactory.getGoodsDao().getGoodsByLike("梵");
+            System.out.println(list);
         } catch (SQLException e) {
             e.printStackTrace();
         }

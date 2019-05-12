@@ -21,7 +21,7 @@
 
      在JSP  凡是有  action  src  href 都要去写绝对路径  加上工程名称的路径
     -->
-    <form action="${pageContext.request.contextPath }/AdminServlet" method="post">
+    <form action="${pageContext.request.contextPath }/AdminServlet?action=login" method="post">
         <div class="login">码蚁商城后台管理系统
             <span style="color:red">${err }</span>
         </div>

@@ -1,6 +1,7 @@
 package com.store.dao;
 
 import com.store.domain.Goods;
+import com.store.domain.PageBean;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,4 +17,12 @@ public interface IGoodsDao {
     int updateGoods(Goods goods) throws SQLException;
     //得到一个商品
     Goods getGoodsWith(String id) throws SQLException;
+
+    Long getGoodsCount() throws SQLException;
+
+    List<Goods> getPageData(Integer currentPageIndex, Integer pageCount) throws SQLException;
+
+    List<Goods> getGoodsByLike(String vagueField) throws SQLException;
+
+    Long getGoodsCountByLike(String vagueField) throws SQLException;
 }

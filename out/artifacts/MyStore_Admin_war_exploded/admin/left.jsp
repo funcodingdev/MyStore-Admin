@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+    pageContext.setAttribute("ctx",ctx);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="${ctx}/admin/css/common.css">
     <style>
         body{
             border-top: 1px solid;
@@ -54,23 +60,23 @@
         }
         
         ul li:nth-child(1) a i{
-            background: url("images/category_icon.png") no-repeat;
+            background: url("${ctx}/admin/images/category_icon.png") no-repeat;
         }
         ul li:nth-child(2) a i{
-            background: url("images/goods_icon.png") no-repeat;
+            background: url("${ctx}/admin/images/goods_icon.png") no-repeat;
         }
         ul li:nth-child(3) a i{
-            background: url("images/admin_icon.png") no-repeat;
+            background: url("${ctx}/admin/images/admin_icon.png") no-repeat;
         }
 
         ul li:nth-child(1) a:hover i{
-            background: url("images/category_hover.png") no-repeat;
+            background: url("${ctx}/admin/images/category_hover.png") no-repeat;
         }
         ul li:nth-child(2) a:hover i{
-            background: url("images/goods_hover.png") no-repeat;
+            background: url("${ctx}/admin/images/goods_hover.png") no-repeat;
         }
         ul li:nth-child(3) a:hover i{
-            background: url("images/admin_hover.png") no-repeat;
+            background: url("${ctx}/admin/images/admin_hover.png") no-repeat;
         }
 
 
@@ -81,9 +87,9 @@
 <body style="background:#283643;">
 
 <ul>
-    <li><a href="category.jsp" target="mainFrame"><i></i>分类管理</a></li>
-    <li><a href="${pageContext.request.contextPath }/GoodsListServlet" target="mainFrame"><i></i>商品管理</a></li>
-    <li></i><a href="account.jsp" target="mainFrame"><i></i>用户管理</a></li>
+    <li><a href="${ctx}/CategoryServlet?action=getAllCategory" target="mainFrame">分类管理</a></li>
+    <li><a href="${ctx}/GoodsServlet?action=getPageData&currentPage=1" target="mainFrame">商品管理</a></li>
+    <li><a href="account.jsp" target="mainFrame">用户管理</a></li>
 </ul>
 
 </body>
